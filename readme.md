@@ -64,7 +64,8 @@ map configuration file : simple_textual_mapper.txt
 # col3: jack          node3(jack)     node6(jackalibaba)
 # col4: alibaba       node4(alibaba)
 
-# col1: hweolrllodjackalibaba
+# following is the output row,
+# col7: hweolrllodjackalibaba        
 
 col_name1,5,true,interpolation
 col_name2,5
