@@ -88,6 +88,7 @@ $ cd configured-row-mapper
 import project using Intellij
 
 
+
 ## Tests
 
 in progress.
@@ -95,6 +96,52 @@ in progress.
 ## Contributors
 
 Bowei Liu
+
+## Simple Structure
+This project is mainly divided into three parts:
+1. graph_logic
+2. graph_representation
+3. operation
+
+For the graph_logic part:  
+
+The first assumption of this project, I can use combination of biFunctionalTransformNodes and 
+filterNodes to construct any row-mapper logic. And one action of "row-mapping" is actually
+ a BFS traversing of a DAG (directed-acyclic-graph).
+
+one biFunctionalTransformNodes take 0 - 2 inputs, and use java.util.BiFunction to evaluate
+output of this node. one transform node involving three inputs can be converted into 
+2 biFunctionalTransformNodes cascaded.
+
+The logic of filterNode is also simple, during graph traversing, when the output
+of a filterNode is evaluated, it will run `andThen` block to determine whether it should throw
+FilterOutException to interrupt mapping of this row.
+
+For the graph_representation part:  
+the DAG (directed-acyclic-graph) of "row-mapper" is persisted using directed-edges.
+Then one edge-represented graph is equivalently converted into a node-represented graph.
+The graphNode is very like the binary tree tree node of some leetcode qestion, but with direction reversed.
+
+
+For the operation part
+The is one part designed to be completely extent-able. None of classes in 
+`graph_logic` and `graph_representation` has direct dependency on any classes in 
+ `operation`, except the abstract `OperationResolver` class. 
+ 
+ To extent , modify logic and add new operations to project is very simple,
+ just add one class to corresponding package, make the class implement `BiFunction`
+ and that is it.
+ 
+ 
+## TODO
+
+In the progress of supporting more type, like all the classes implementing `java.lang.Number`.
+Develop more operations.
+
+
+
+
+
 
 ## License
 
