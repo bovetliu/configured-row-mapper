@@ -28,6 +28,7 @@
 
 # IntelliJ
 /out/
+target/*
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -35,11 +36,12 @@
 # JIRA plugin
 atlassian-ide-plugin.xml
 
+# for log
+configured-row-mapper.log
+
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 .idea/
-pom.xml
-src/
