@@ -28,14 +28,15 @@ gender: MALE
 In my current work setup, I need to create two completely separate but highly similar 
 data pipelines to handle these two kinds of output.
 
-So I am thinking of creating one configurable \"row-mapper\".
+So I am thinking of creating one configurable "row-mapper".
 
 ## Code Example
 
 java code is given below: 
 ```java
     GraphBuilder graphBuilder = new GraphBuilder();
-    SimpleTextFileAdapter simpleTextFileAdapter = new SimpleTextFileAdapter(COMMA_SEPARATOR);  // COMMA_SEPARATOR is ","
+    SimpleTextFileAdapter simpleTextFileAdapter 
+        = new SimpleTextFileAdapter(COMMA_SEPARATOR);  // COMMA_SEPARATOR is ","
     Iterator<GraphEdge> graphEdgeIterator = simpleTextFileAdapter.apply("simple_textual_mappper.txt");
     Collection<GraphNode> nodes = graphBuilder.buildFromEdges(graphEdgeIterator);
 
