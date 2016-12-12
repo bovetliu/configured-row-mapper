@@ -24,7 +24,6 @@ public class App {
 
   public static void main(String[] args) {
     GraphBuilder graphBuilder = new GraphBuilder();
-
     SimpleTextFileAdapter simpleTextFileAdapter = new SimpleTextFileAdapter(COMMA_SEPARATOR);
     Iterator<GraphEdge> graphEdgeIterator = simpleTextFileAdapter.apply("simple_textual_mappper.txt");
     Collection<GraphNode> nodes = graphBuilder.buildFromEdges(graphEdgeIterator);
@@ -47,7 +46,5 @@ public class App {
 
     Map<String, String> output = dagMapper.map(inputRow1);
     LOGGER.info(output);
-
-
   }
 }
