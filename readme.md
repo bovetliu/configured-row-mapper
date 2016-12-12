@@ -1,7 +1,7 @@
 # Configured-Row-Mapper
 ## Synopsis
 
-This project is created to server as general-purpose row mapper. The reason is, in my work,
+This project is created to serve as general-purpose row mapper. The reason is, in my work,
 I am increasingly facing lots of custom pipeline building and maintenance work. After summarizing
 what I did in those custom data pipelines, I found the part which is least reusable
 is the "row-mapper".   
@@ -18,12 +18,12 @@ gender: male
 
 one transformed output row could be like following:  
 full_name: Bowei Liu  
-summary: Bowei Liu is a male aged 26.
+summary: Bowei Liu is a male aged 26.   
 
 another transformed output row could be like following:
-full_name_in_capital_letter: BOWEI LIU
-age: twenty-six
-gender: MALE
+full_name_in_capital_letter: BOWEI LIU    
+age: twenty-six   
+gender: MALE   
 
 In my current work setup, I need to create two completely separate but highly similar 
 data pipelines to handle these two kinds of output.
@@ -88,22 +88,17 @@ $ cd configured-row-mapper
 import project using Intellij
 
 
-
 ## Tests
 
 in progress.
 
-## Contributors
-
-Bowei Liu
-
-## Simple Structure
+## Project Structure
 This project is mainly divided into three parts:
 1. graph_logic
 2. graph_representation
 3. operation
 
-For the graph_logic part:  
+For the `graph_logic` part:  
 
 The first assumption of this project, I can use combination of biFunctionalTransformNodes and 
 filterNodes to construct any row-mapper logic. And one action of "row-mapping" is actually
@@ -117,32 +112,46 @@ The logic of filterNode is also simple, during graph traversing, when the output
 of a filterNode is evaluated, it will run `andThen` block to determine whether it should throw
 FilterOutException to interrupt mapping of this row.
 
-For the graph_representation part:  
+For the `graph_representation` part:  
 the DAG (directed-acyclic-graph) of "row-mapper" is persisted using directed-edges.
 Then one edge-represented graph is equivalently converted into a node-represented graph.
 The graphNode is very like the binary tree tree node of some leetcode qestion, but with direction reversed.
 
 
-For the operation part
+For the `operation` part  
 The is one part designed to be completely extent-able. None of classes in 
 `graph_logic` and `graph_representation` has direct dependency on any classes in 
- `operation`, except the abstract `OperationResolver` class. 
+`operation`, except the abstract `OperationResolver` class. 
  
- To extent , modify logic and add new operations to project is very simple,
- just add one class to corresponding package, make the class implement `BiFunction`
- and that is it.
+To extent , modify logic and add new operations to project is very simple,
+just add one class to corresponding package, make the class implement `BiFunction`
+and that is it.
  
  
 ## TODO
 
-In the progress of supporting more type, like all the classes implementing `java.lang.Number`.
-Develop more operations.
+1. In the progress of supporting more type, like all the classes implementing `java.lang.Number`.
+2. Develop more operations.
+3. Testing
 
 
+## Contributors
 
-
+Bowei Liu
 
 
 ## License
 
-MIT license
+Copyright (c) 2016 Bowei Liu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the 
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit 
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
