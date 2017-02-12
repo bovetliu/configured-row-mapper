@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Iterator;
+import java.util.function.Function;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.Iterator;
  */
 public class SimpleTextFileAdapter implements  MediumAdapter<File> {
 
-  private String seperator;
+  private final java.util.function.Function<String, String[]> lineParser;
 
   private File file;
 
@@ -22,7 +23,7 @@ public class SimpleTextFileAdapter implements  MediumAdapter<File> {
 
 
   public SimpleTextFileAdapter(String separatorParam) {
-    seperator = separatorParam;
+    lineParser = s -> s.split(separatorParam);
     classLoader = SimpleTextFileAdapter.class.getClassLoader();
   }
 
@@ -47,13 +48,13 @@ public class SimpleTextFileAdapter implements  MediumAdapter<File> {
 
         @Override
         public GraphEdge next() {
-          String[] exploded = oneLineCache.split(seperator);
+          String[] exploded = lineParser.apply(oneLineCache);
           if (exploded.length != 2 && exploded.length != 4) {
             throw new IllegalStateException("line:\""+oneLineCache+"\" should have either 2 entries or 4 entries");
           }
           GraphEdge edge = new GraphEdge();
-          edge.setFromNodeId(exploded[0].trim());
-          edge.setToNodeId(exploded[1].trim());
+          edge.setFromNodeId(exploded[0].trim());  // in one line, the token is fromNodeId
+          edge.setToNodeId(exploded[1].trim());    // second token is toNodeId
 
           if (exploded.length == 4) {
             edge.setDescriptiveEdge(Boolean.parseBoolean(exploded[2].trim()));
@@ -84,13 +85,8 @@ public class SimpleTextFileAdapter implements  MediumAdapter<File> {
     }
   }
 
-
-  public String getSeperator() {
-    return seperator;
-  }
-
-  public void setSeperator(String seperator) {
-    this.seperator = seperator;
+  public Function<String, String[]> getLineParser() {
+    return lineParser;
   }
 
   public File getFile() {
