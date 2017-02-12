@@ -1,6 +1,6 @@
 package com.leantaas;
 
-import com.leantaas.graph_logic.DAGMapper;
+import com.leantaas.graph_logic.MappingStep;
 import com.leantaas.graph_logic.GraphBuilder;
 import com.leantaas.graph_logic.storage_medium_adapter.SimpleTextFileAdapter;
 import com.leantaas.graph_representation.GraphEdge;
@@ -32,7 +32,7 @@ public class App {
       LOGGER.info(node.prettyPrintNode());
     }
 
-    DAGMapper dagMapper = new DAGMapper(nodes);
+    MappingStep mappingStep = new MappingStep(nodes);
 
     // following code should be in some database fetching row callback method
     LOGGER.info("simulating in some database row fetching callback method");
@@ -44,7 +44,7 @@ public class App {
 
     LOGGER.info("started mapping...\n");
 
-    Map<String, String> output = dagMapper.map(inputRow1);
+    Map<String, String> output = mappingStep.map(inputRow1);
     LOGGER.info(output);
   }
 }

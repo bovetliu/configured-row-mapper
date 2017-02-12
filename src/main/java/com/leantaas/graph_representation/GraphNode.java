@@ -49,19 +49,20 @@ public class GraphNode {
     this.biFunction = biFunction;
   }
 
-  public String getOutput() {
+  public String computeOutput() {
     if (fromNode1 == null && fromNode2 == null && output == null) {
       throw new IllegalStateException(String.format("input-node: %s has no initial value when doing row mapping",
           graphNodeId));
     }
     if (output == null) {
-      String outputFromNode1 = fromNode1 != null ? fromNode1.getOutput() : null;
-      String outputFromNode2 = fromNode2 != null ? fromNode2.getOutput() : null;
-      output = getBiFunction().apply(outputFromNode1, outputFromNode2);
+      String outputFromNode1 = fromNode1 != null ? fromNode1.computeOutput() : null;
+      String outputFromNode2 = fromNode2 != null ? fromNode2.computeOutput() : null;
+      output = biFunction.apply(outputFromNode1, outputFromNode2);
     }
     return output;
   }
 
+  // directed-first-search clear output
   public void clearOutput() {
     if (output != null) {
       output = null;

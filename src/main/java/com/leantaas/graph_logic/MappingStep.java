@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * Created by boweiliu on 12/11/16.
  */
-public class DAGMapper {
+public class MappingStep {
 
   protected final Collection<GraphNode> graphNodes;
 
@@ -20,7 +20,7 @@ public class DAGMapper {
   protected final HashMap<String, GraphNode> inputColNameVsInputNode = new HashMap<>();
   protected final Map<String, GraphNode> outputColNameVsOutputNode = new HashMap<>();
 
-  public DAGMapper(Collection<GraphNode> graphNodesParam) {
+  public MappingStep(Collection<GraphNode> graphNodesParam) {
     graphNodes = graphNodesParam;
 
     nodeNameVsAllNodes = graphNodesParam.stream().collect(Collectors.toMap(
@@ -82,12 +82,13 @@ public class DAGMapper {
           String.format("colName : %s cannot find corresponding input node", colName));
       inputNode.setOutput(colFieldValue);
     }
+    // depth first search
     for (GraphNode outputNode : outputColNameVsOutputNode.values()) {
-      outputNode.getOutput();
+      outputNode.computeOutput();
     }
     return outputColNameVsOutputNode.values().stream().collect(Collectors.toMap(
         node -> node.graphNodeId,
-        GraphNode::getOutput
+        GraphNode::computeOutput
     ));
   }
 

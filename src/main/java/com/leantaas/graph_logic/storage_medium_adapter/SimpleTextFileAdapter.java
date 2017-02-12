@@ -15,12 +15,16 @@ import java.util.function.Function;
  */
 public class SimpleTextFileAdapter implements  MediumAdapter<File> {
 
-  private final java.util.function.Function<String, String[]> lineParser;
+  private final Function<String, String[]> lineParser;
 
   private File file;
 
   private final ClassLoader classLoader;
 
+  public SimpleTextFileAdapter(Function<String, String[]> lineParserParam) {
+      lineParser = lineParserParam;
+      classLoader = SimpleTextFileAdapter.class.getClassLoader();
+  }
 
   public SimpleTextFileAdapter(String separatorParam) {
     lineParser = s -> s.split(separatorParam);
