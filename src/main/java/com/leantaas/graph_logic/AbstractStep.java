@@ -18,8 +18,10 @@ public abstract  class AbstractStep {
     protected final Collection<GraphNode> graphNodes;
 
     protected final Map<String, GraphNode> nodeNameVsAllNodes;
-    protected final Map<String, GraphNode> inputColNameVsInputNode = new HashMap<>();
-    protected final Map<String, GraphNode> outputColNameVsOutputNode = new HashMap<>();
+
+    protected final Map<String, GraphNode> inputColNameVsInputNode;
+
+    protected final Map<String, GraphNode> outputColNameVsOutputNode;
 
     public AbstractStep(Collection<GraphNode> graphNodesParam) {
         graphNodes = graphNodesParam;
@@ -44,6 +46,9 @@ public abstract  class AbstractStep {
                 outputColumnNames.remove(graphNode.getFromNode2().graphNodeId);
             }
         }
+        inputColNameVsInputNode = new HashMap<>();
+        outputColNameVsOutputNode = new HashMap<>();
+
         for (GraphNode graphNode : graphNodesParam) {
             if (graphNode.getFromNode1() == null && graphNode.getFromNode2() == null) {
                 inputColNameVsInputNode.put(graphNode.graphNodeId, graphNode);
