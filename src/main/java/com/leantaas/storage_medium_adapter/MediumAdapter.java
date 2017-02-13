@@ -1,4 +1,4 @@
-package com.leantaas.graph_logic.storage_medium_adapter;
+package com.leantaas.storage_medium_adapter;
 
 import com.leantaas.graph_representation.GraphEdge;
 

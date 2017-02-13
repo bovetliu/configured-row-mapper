@@ -1,10 +1,12 @@
 package com.leantaas;
 
+import com.leantaas.graph_logic.FilteringStep;
 import com.leantaas.graph_logic.MappingStep;
 import com.leantaas.graph_logic.GraphBuilder;
-import com.leantaas.graph_logic.storage_medium_adapter.SimpleTextFileAdapter;
+import com.leantaas.storage_medium_adapter.SimpleTextFileAdapter;
 import com.leantaas.graph_representation.GraphEdge;
 import com.leantaas.graph_representation.GraphNode;
+import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import java.util.Collection;
@@ -44,7 +46,26 @@ public class App {
 
     LOGGER.info("started mapping...\n");
 
-    Map<String, String> output = mappingStep.map(inputRow1);
-    LOGGER.info(output);
+    Optional<Map<String, String>> output = mappingStep.map(inputRow1);
+
+
+    if (output.isPresent()) {
+      LOGGER.info("input is not filtered");
+      LOGGER.info("result: " + output.get());
+    } else {
+      LOGGER.info("input is filtered");
+    }
+
+    FilteringStep filterStep = new FilteringStep("col_name4", (val) -> val.equals("baidu"));
+    output = filterStep.map(inputRow1);
+
+
+    if (output.isPresent()) {
+      LOGGER.info("input is not filtered");
+      LOGGER.info("result: " + output.get());
+    } else {
+      LOGGER.info("input is filtered");
+    }
+
   }
 }

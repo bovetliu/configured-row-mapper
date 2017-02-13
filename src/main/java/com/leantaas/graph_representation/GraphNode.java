@@ -20,6 +20,9 @@ public class GraphNode {
   public BiFunction<String, String, String> biFunction;
 
   public GraphNode(String graphNodeIdParam) {
+    if (graphNodeIdParam == null || graphNodeIdParam.isEmpty()) {
+      throw new IllegalArgumentException("graphNodeIdParam cannot be null or empty");
+    }
     graphNodeId = graphNodeIdParam;
   }
 
@@ -103,5 +106,25 @@ public class GraphNode {
 
   public void setFromNode2(GraphNode fromNode2) {
     this.fromNode2 = fromNode2;
+  }
+
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof GraphNode)) {
+      return false;
+    }
+
+    GraphNode graphNode = (GraphNode) o;
+
+    return graphNodeId.equals(graphNode.graphNodeId);
+  }
+
+  @Override
+  public int hashCode() {
+    return graphNodeId.hashCode();
   }
 }
