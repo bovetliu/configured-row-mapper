@@ -1,5 +1,6 @@
 package com.leantaas.graph_representation;
 
+import com.sun.istack.internal.Nullable;
 import java.util.function.BiFunction;
 
 /**
@@ -11,11 +12,11 @@ public class GraphNode {
 
     public final String graphNodeId;
 
-    protected GraphNode fromNode1;
+    @Nullable protected GraphNode fromNode1;
 
-    protected GraphNode fromNode2;
+    @Nullable protected GraphNode fromNode2;
 
-    protected String output;
+    @Nullable protected String output;
 
     public BiFunction<String, String, String> biFunction;
 
@@ -52,7 +53,11 @@ public class GraphNode {
         this.biFunction = biFunction;
     }
 
-    public String computeOutput() {
+    /**
+     * Compute output of this node using DFS.
+     * @return nullable computed string of output of this node
+     */
+    public @Nullable String computeOutput() {
         if (fromNode1 == null && fromNode2 == null && output == null) {
             throw new IllegalStateException(String.format("input-node: %s has no initial value when doing row mapping",
                     graphNodeId));
@@ -78,7 +83,7 @@ public class GraphNode {
         }
     }
 
-    public void setOutput(String nodeOutputParam) {
+    public void setOutput(@Nullable String nodeOutputParam) {
         output = nodeOutputParam;
     }
 
@@ -87,12 +92,12 @@ public class GraphNode {
             return String.format("id %s, input-node", graphNodeId);
         }
         return String.format("id: %s, fromNodeId1: %s, fromNodeId2: %s",
-                graphNodeId != null ? graphNodeId : "null",
+                graphNodeId,
                 fromNode1 != null ? fromNode1.graphNodeId : "null",
                 fromNode2 != null ? fromNode2.graphNodeId : "null");
     }
 
-    public GraphNode getFromNode1() {
+    public @Nullable GraphNode getFromNode1() {
         return fromNode1;
     }
 
@@ -100,7 +105,7 @@ public class GraphNode {
         this.fromNode1 = fromNode1;
     }
 
-    public GraphNode getFromNode2() {
+    public @Nullable GraphNode getFromNode2() {
         return fromNode2;
     }
 

@@ -1,6 +1,5 @@
 package com.leantaas.graph_logic;
 
-import com.google.common.base.Preconditions;
 import com.leantaas.graph_representation.GraphNode;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,8 +33,12 @@ public final class FilteringStep extends AbstractStep {
      */
     public FilteringStep(String columnName, Predicate<String> valuePredicate) {
         super(Collections.emptySet());
-        filteringCondition = (map) -> valuePredicate.test(Preconditions.checkNotNull(map.get(columnName),
-                "input row cannot find " + columnName));
+        filteringCondition = (incomingRowAsAMap) -> {
+            if (!incomingRowAsAMap.containsKey(columnName)) {
+                throw new IllegalStateException("input row cannot find column: " + columnName);
+            }
+            return valuePredicate.test(incomingRowAsAMap.get(columnName));
+        };
     }
 
     /**
@@ -49,12 +52,14 @@ public final class FilteringStep extends AbstractStep {
      */
     public FilteringStep(Map<String, Predicate<String>> filteringConditionParam) {
         super(Collections.emptySet());
-        filteringCondition = (beingTestedMap) -> {
+        filteringCondition = (incomingRowAsAMap) -> {
             for (Map.Entry<String, Predicate<String>> filter : filteringConditionParam.entrySet()) {
-                String colName = filter.getKey();
+                String columnName = filter.getKey();
                 Predicate<String> passCondition = filter.getValue();
-                String toBeTestedValue = Preconditions.checkNotNull(beingTestedMap.get(colName), "input row cannot "
-                        + "find " + colName);
+                if (!incomingRowAsAMap.containsKey(columnName)) {
+                    throw new IllegalStateException("incoming row does not contain column: " + columnName);
+                }
+                String toBeTestedValue = incomingRowAsAMap.get(columnName);
                 if (!passCondition.test(toBeTestedValue)) {
                     return false;
                 }
