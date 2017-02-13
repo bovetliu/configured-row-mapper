@@ -8,8 +8,8 @@ import java.util.function.BiFunction;
 public class Add<T extends Number> implements BiFunction<T, T, T> {
 
 
-  @Override
-  public T apply(T t, T t2) {
-    throw new UnsupportedOperationException("I have not figured out how to write");
-  }
+    @Override
+    public T apply(T t, T t2) {
+        throw new UnsupportedOperationException("I have not figured out how to write");
+    }
 }

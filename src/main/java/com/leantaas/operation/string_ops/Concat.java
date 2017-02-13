@@ -10,20 +10,20 @@ import java.util.function.BiFunction;
  */
 public class Concat implements BiFunction<String, String, String> {
 
-  private static Concat singleton;
+    private static Concat singleton;
 
-  @Override
-  public String apply(String s, String s2) {
-    if (s == null || s2 == null) {
-      throw new NullPointerException("concatenation operation require both input present");
+    @Override
+    public String apply(String s, String s2) {
+        if (s == null || s2 == null) {
+            throw new NullPointerException("concatenation operation require both input present");
+        }
+        return s + s2;
     }
-    return s + s2;
-  }
 
-  public static Concat simpleFactoryCreate() {
-    if (singleton == null) {
-      singleton = new Concat();
+    public static Concat simpleFactoryCreate() {
+        if (singleton == null) {
+            singleton = new Concat();
+        }
+        return singleton;
     }
-    return singleton;
-  }
 }

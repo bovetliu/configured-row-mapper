@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  *
  */
-public abstract  class AbstractStep {
+public abstract class AbstractStep {
 
     protected final Collection<GraphNode> graphNodes;
 
@@ -77,18 +77,19 @@ public abstract  class AbstractStep {
     }
 
     /**
-     * Give one incoming row of data represented by one map. The mapped input column names must be
-     * a subset of incoming row keyset.
+     * Give one incoming row of data represented by one map. The mapped input column names must be a subset of incoming
+     * row keyset.
      *
-     * <p> For example, if incoming row contains following column names: {"COLUMN1", "COLUMN2", "COLUMN3"},
-     * the keySet of inputColNameVsInputNode must be either {"COLUMN1", "COLUMN2", "COLUMN3"} or {"COLUMN1", "COLUMN2"}
-     * or { "COLUMN2", "COLUMN3"} or {"COLUMN1"}.
+     * <p> For example, if incoming row contains following column names: {"COLUMN1", "COLUMN2", "COLUMN3"}, the keySet
+     * of inputColNameVsInputNode must be either {"COLUMN1", "COLUMN2", "COLUMN3"} or {"COLUMN1", "COLUMN2"} or {
+     * "COLUMN2", "COLUMN3"} or {"COLUMN1"}.
      *
-     * <p> If the keySet of inputColNameVsInputNode is like {"COLUMN1", "COLUMN3", "COLUMN4"}, it will be one invalid one.
+     * <p> If the keySet of inputColNameVsInputNode is like {"COLUMN1", "COLUMN3", "COLUMN4"}, it will be one invalid
+     * one.
+     *
      * @param incomingRow a row of data represented by a map, key is column name, value is column value
      * @return outputRow, a row of data represented by a map, key is column name, value is output value
-     *
      * @throws FilteredRowException when this row needs to be filtered out.
      */
-    public abstract Optional<Map<String, String>> map (Map<String, String> incomingRow);
+    public abstract Optional<Map<String, String>> map(Map<String, String> incomingRow);
 }

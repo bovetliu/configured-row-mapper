@@ -8,8 +8,8 @@ import java.util.function.Function;
 /**
  * Created by boweiliu on 12/11/16.
  */
-public interface MediumAdapter <T> extends Function<T, Iterator<GraphEdge>> {
+public interface MediumAdapter<T> extends Function<T, Iterator<GraphEdge>> {
 
-  @Override
-  Iterator<GraphEdge> apply(T t);
+    @Override
+    Iterator<GraphEdge> apply(T t);
 }

@@ -11,27 +11,27 @@ import java.util.function.BiFunction;
  */
 public class OperationGuavaClassPathResolver extends OperationResolver {
 
-  @SuppressWarnings("unchecked")
-  public OperationGuavaClassPathResolver(String stringOpsPackage,
-                                         String numberOpsPackage) {
-    super();
-    try {
-      ClassPath stringClassPath = ClassPath.from(OperationResolver.class.getClassLoader());
-      for (ClassPath.ClassInfo classInfo : stringClassPath.getTopLevelClasses(stringOpsPackage)) {
-        stringOperationLookup.put(classInfo.getSimpleName().toLowerCase(),
-            (BiFunction<String, String, String>) classInfo.load().newInstance());
-      }
+    @SuppressWarnings("unchecked")
+    public OperationGuavaClassPathResolver(String stringOpsPackage,
+            String numberOpsPackage) {
+        super();
+        try {
+            ClassPath stringClassPath = ClassPath.from(OperationResolver.class.getClassLoader());
+            for (ClassPath.ClassInfo classInfo : stringClassPath.getTopLevelClasses(stringOpsPackage)) {
+                stringOperationLookup.put(classInfo.getSimpleName().toLowerCase(),
+                        (BiFunction<String, String, String>) classInfo.load().newInstance());
+            }
 
-      ClassPath numberOpClassPath = ClassPath.from(OperationResolver.class.getClassLoader());
-      for(ClassPath.ClassInfo classInfo : numberOpClassPath.getTopLevelClasses(numberOpsPackage)) {
-        numberOperationLookup.put(classInfo.getSimpleName().toLowerCase(),
-            (BiFunction<Number, Number, Number>) classInfo.load().newInstance());
-      }
-    } catch (IOException ioe) {
-      throw new RuntimeException("ConcatOperation.class.getClassLoader() IOE");
-    } catch (IllegalAccessException | InstantiationException e) {
-      e.printStackTrace();
-      throw new RuntimeException(e);
+            ClassPath numberOpClassPath = ClassPath.from(OperationResolver.class.getClassLoader());
+            for (ClassPath.ClassInfo classInfo : numberOpClassPath.getTopLevelClasses(numberOpsPackage)) {
+                numberOperationLookup.put(classInfo.getSimpleName().toLowerCase(),
+                        (BiFunction<Number, Number, Number>) classInfo.load().newInstance());
+            }
+        } catch (IOException ioe) {
+            throw new RuntimeException("ConcatOperation.class.getClassLoader() IOE");
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
-  }
 }

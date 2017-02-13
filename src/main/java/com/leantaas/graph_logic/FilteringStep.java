@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 public final class FilteringStep extends AbstractStep {
 
     public static final Predicate<Map<String, String>> NOT_ALL_NULL_OR_EMPTY =
-            map -> map.values().stream().anyMatch( str -> str != null && !str.isEmpty());
+            map -> map.values().stream().anyMatch(str -> str != null && !str.isEmpty());
 
     // Map<Colname, Predicate<Value>>
     private final Predicate<Map<String, String>> filteringCondition;
@@ -27,9 +27,10 @@ public final class FilteringStep extends AbstractStep {
 
     /**
      * supply the column name and corresponding condition that this row can PASS the filter.
+     *
      * @param columnName columnName
      * @param valuePredicate POSITIVE predicate of value. POSITIVE means something can pass the filter. This is in
-     *        alignment of java stream API filter(Predicate)
+     * alignment of java stream API filter(Predicate)
      */
     public FilteringStep(String columnName, Predicate<String> valuePredicate) {
         super(Collections.emptySet());
@@ -43,12 +44,13 @@ public final class FilteringStep extends AbstractStep {
      * <p>If this map has multiple filtering rules, this one can be a convenience method.
      *
      * supply one map, keyed by column names and corresponding POSITIVE predicates of values.
+     *
      * @param filteringConditionParam map keyed by column names, values are POSITIVE predicates of values
      */
     public FilteringStep(Map<String, Predicate<String>> filteringConditionParam) {
         super(Collections.emptySet());
         filteringCondition = (beingTestedMap) -> {
-            for (Map.Entry<String, Predicate<String>> filter: filteringConditionParam.entrySet()) {
+            for (Map.Entry<String, Predicate<String>> filter : filteringConditionParam.entrySet()) {
                 String colName = filter.getKey();
                 Predicate<String> passCondition = filter.getValue();
                 String toBeTestedValue = Preconditions.checkNotNull(beingTestedMap.get(colName), "input row cannot "
@@ -62,7 +64,7 @@ public final class FilteringStep extends AbstractStep {
     }
 
     @Override
-    public Optional<Map<String, String>> map (Map<String, String> incomingRow) {
+    public Optional<Map<String, String>> map(Map<String, String> incomingRow) {
         Objects.requireNonNull(incomingRow, "incomingRow cannot be null or empty");
         if (filteringCondition.test(incomingRow)) {
             return Optional.of(incomingRow);

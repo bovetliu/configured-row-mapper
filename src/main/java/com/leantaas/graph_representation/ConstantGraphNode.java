@@ -9,26 +9,27 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ConstantGraphNode extends GraphNode {
 
-  private static final Map<String, ConstantGraphNode> internalConstantNodes = new HashMap<>();
-  private static AtomicInteger constantNodeCounter = new AtomicInteger();
+    private static final Map<String, ConstantGraphNode> internalConstantNodes = new HashMap<>();
+    private static AtomicInteger constantNodeCounter = new AtomicInteger();
 
 
-  public ConstantGraphNode(String constantValue) {
-    super("constant_" + String.valueOf(constantNodeCounter.incrementAndGet()));
-    output = constantValue;
-  }
+    public ConstantGraphNode(String constantValue) {
+        super("constant_" + String.valueOf(constantNodeCounter.incrementAndGet()));
+        output = constantValue;
+    }
 
-  @Override
-  public void setOutput(String outputParam) {
-    throw new UnsupportedOperationException("set output of constant graph node is now supported");
-  }
+    @Override
+    public void setOutput(String outputParam) {
+        throw new UnsupportedOperationException("set output of constant graph node is now supported");
+    }
 
-  @Override
-  public void clearOutput() {
+    @Override
+    public void clearOutput() {
 
-  }
-  @Override
-  public void addFromNode(GraphNode oneFromNode) {
-    throw new UnsupportedOperationException("add from node to constant node is not supportec");
-  }
+    }
+
+    @Override
+    public void addFromNode(GraphNode oneFromNode) {
+        throw new UnsupportedOperationException("add from node to constant node is not supportec");
+    }
 }

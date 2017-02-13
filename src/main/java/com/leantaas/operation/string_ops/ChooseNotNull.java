@@ -7,24 +7,24 @@ import java.util.function.BiFunction;
  */
 public class ChooseNotNull implements BiFunction<String, String, String> {
 
-  private static ChooseNotNull singleton;
+    private static ChooseNotNull singleton;
 
 
-  @Override
-  public String apply(String s1, String s2) {
-    if (s1 == null && s2 == null) {
-      throw new IllegalArgumentException("s1 and s2 cannot be both null");
+    @Override
+    public String apply(String s1, String s2) {
+        if (s1 == null && s2 == null) {
+            throw new IllegalArgumentException("s1 and s2 cannot be both null");
+        }
+        if (s1 != null && s2 != null) {
+            throw new IllegalArgumentException("one of s1 and s2 must be null");
+        }
+        return s1 != null ? s1 : s2;
     }
-    if (s1 != null && s2 != null) {
-      throw new IllegalArgumentException("one of s1 and s2 must be null");
-    }
-    return s1 != null ? s1 : s2;
-  }
 
-  public static ChooseNotNull simpleFactoryCreate() {
-    if (singleton == null) {
-      singleton = new ChooseNotNull();
+    public static ChooseNotNull simpleFactoryCreate() {
+        if (singleton == null) {
+            singleton = new ChooseNotNull();
+        }
+        return singleton;
     }
-    return singleton;
-  }
 }
